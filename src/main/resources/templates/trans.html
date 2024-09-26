@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Transaction History - City Bank</title>
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+	background: linear-gradient(to right, #c86b6b, #00ff80);
+	color: #ffffff;
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.navbar-custom {
+	background-color: rgba(0, 0, 0, 0.7);
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+}
+
+.navbar-custom a {
+	color: #ffffff !important;
+}
+
+.navbar-custom .navbar-brand {
+	font-weight: bold;
+}
+
+.container {
+	max-width: 1500px;
+	margin-top: 100px;
+	/* Reduced margin for the table to be closer to the top */
+	text-align: center;
+}
+
+.sticky-header {
+	position: sticky;
+	top: 0;
+	left:45%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 1000;
+	text-align: center;
+	padding: 5px;
+	font-weight: bold;
+	width: max-content;
+	font-size: 24px;
+	color: #ffffff;
+	margin-bottom: 100px;
+}
+
+.table-custom {
+	background-color: rgba(0, 0, 0, 0.8);
+	/* Darker background for better contrast */
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+	overflow-x: auto;
+	/* Ensures table is responsive */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+	background-color: rgba(255, 255, 255, 0.1);
+	/* Slightly lighter row color */
+}
+
+.table-striped td, .table-striped th {
+	color: #ffffff;
+	/* White text color for visibility */
+	font-weight: bold;
+	/* Bolder text for readability */
+	padding: 15px;
+	/* Increase padding for better spacing */
+	border-bottom: 1px solid #c86b6b;
+	/* Yellow border for rows */
+}
+
+.table-striped th {
+	background-color: #c86b6b;
+	/* Light golden background for headers */
+}
+
+.text-success {
+	color: #28a745 !important;
+}
+
+.text-danger {
+	color: #dc3545 !important;
+}
+
+.custom-link {
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.custom-link:hover {
+	color: white;
+	text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-custom">
+		<a class="navbar-brand" href="#">City Bank</a>
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item"><a class="nav-link" href="dash">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="transactions">Transactions</a></li>
+            <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+		</ul>
+	</nav>
+
+	<div class="container">
+		<div class="sticky-header text-center mb-3 px-3">
+			<span>Transaction History</span>
+		</div>
+		<div class="table-responsive table-custom">
+			<table class="table table-dark table-striped">
+				<thead>
+					<tr>
+						<th>S.No.</th>
+						<th>Type</th>
+						<th>Amount</th>
+						<th>Date</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${transactions.isEmpty()}==true">
+						<td colspan="5">No Transactions Yet</td>
+					</tr>
+					<tr th:each="transaction, i : ${transactions}">
+						<td th:text="${i.index +1}"></td>
+						<td th:text="${transaction.transType}"></td>
+						<td th:text="${transaction.transAmt}"
+							th:classappend="${transaction.transType == 'Deposit' ? 'text-success' : 'text-danger'}">
+							<span
+							th:text="transaction.type == 'Deposit'} ? '+$'+'transaction.transAmt' : '-$' + transaction.transAmt"></span>
+						</td>
+						<td th:text="${transaction.time}"></td>
+						<td th:text="${transaction.date}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<p class="text-center">
+			<a href="dash" class="custom-link">Back
+				to Dashboard</a>
+		</p>
+	</div>
+
+</body>
+
+</html>
