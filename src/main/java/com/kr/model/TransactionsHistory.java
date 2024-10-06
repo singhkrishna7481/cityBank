@@ -1,5 +1,7 @@
 package com.kr.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,11 +38,8 @@ public class TransactionsHistory {
 	@Column(name = "Amount")
 	private Double transAmt;
 	@NonNull
-	@Column(name = "Time", length = 20)
-	private String time;
-	@NonNull
-	@Column(name = "Date", length = 10)
-	private String date;
+	@Column(name = "Date and Time", length = 35)
+	private LocalDateTime timeStamp;
 
 	@ManyToOne(targetEntity = UserAccount.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "User_Account", referencedColumnName = "id")

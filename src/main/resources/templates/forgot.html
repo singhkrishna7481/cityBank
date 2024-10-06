@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login - City Bank</title>
+    <title>Forgot Password - City Bank</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        body {
+        body {	
             font-family: 'Arial', sans-serif;
             background: linear-gradient(to right, #c86b6b, #00ff80);
             color: #ffffff;
@@ -70,7 +70,13 @@
             background-color: #333;
             color: #ffffff;
         }
-
+       input[type="text"]:disabled{
+            background-color: black;
+            color: #ffffff;
+            border: 1px solid #c86b6b;
+  			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  			cursor: not-allowed;
+}
         .btn {
             background-color: #c86b6b;
             border: none;
@@ -128,25 +134,32 @@
 </nav>
 
 <div class="container">
-    <h2 class="text-center">Login</h2>
-    <div th:if="${param.error}"  class="alert alert-danger mt-3 text-center">
-			<span>Invalid username or password.</span>
+    <h2 class="text-center">Forgot Password</h2>
+    <div  th:if="${error==true}" class="alert alert-danger mt-3 text-center">
+			<span th:text="${userNotFound}"></span>
+			<span th:text="${serverError}"></span>
+			<span th:text="${invalidOTP}"></span>
 		</div>
 		<div th:if="${success==true}" class="alert alert-success mt-3 text-center">
-			<span th:text="${updated}"></span>
+			<span th:text="${sent}"></span>
 		</div>
-    <form action="login" method="post">
+    <form action="send" method="post">
         <div class="form-group">
             <label>Username:</label>
-            <input type="text" class="form-control" name="username" required />
+            <input type="text" class="form-control" name="username" required th:value="${username}" th:disabled="${otpSent==true}"/>
         </div>
+        <button type="submit" class="btn btn-block" th:if="${otpSent!=true}" >Send OTP</button>
+         </form>
+          <div th:if="${otpSent==true}">
+          <form action="verify" method="post">
         <div class="form-group">
-            <label>Password:</label>
-            <input type="password" class="form-control" name="password" required />
+            <label>OTP:</label>
+            <input type="hidden" th:value="${username}" name="usernm" readonly="readonly" >
+            <input type="text" autocomplete="one-time-code" inputmode="numeric" maxlength="6" pattern="\d{6}" class="form-control" name="otp" placeholder="6 digit number" required />
         </div>
-        <button type="submit" class="btn btn-block">Login</button>
+        <button type="submit" class="btn btn-block">Verify OTP</button>
     </form>
-    <p class="text-center mt-3">Forgotten Password? <a href="forgot" class="custom-link">Click here</a></p>
+          </div>
     <p class="text-center mt-3">Don't have an account? <a href="register" class="custom-link">Register here</a></p>
 
 </div>

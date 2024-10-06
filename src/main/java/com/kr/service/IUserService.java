@@ -2,6 +2,8 @@ package com.kr.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+
 import com.kr.model.TransactionsHistory;
 import com.kr.model.UserAccount;
 
@@ -14,5 +16,15 @@ public interface IUserService {
 	
 	UserAccount getUserById(Integer id);
 	
-	List<TransactionsHistory> getTransactionHistory(Integer id);
+	public List<TransactionsHistory> getTransactionHistory(Integer id,Sort sort);
+	
+	boolean sendMail(String toEmail,UserAccount user);
+	
+	boolean verifyOTP(String otp);
+	
+	boolean sendOTPMail(String username);
+	
+	boolean updatePassword(String password, String username);
+	
+	public Sort sortHistory(String sortBy);
 }

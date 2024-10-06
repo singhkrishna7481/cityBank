@@ -2,163 +2,214 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Transaction History - City Bank</title>
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-	rel="stylesheet">
-<style>
-body {
-	font-family: 'Arial', sans-serif;
-	background: linear-gradient(to right, #c86b6b, #00ff80);
-	color: #ffffff;
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: flex-start;
-	flex-direction: column;
-}
+    <title>Transaction History - City Bank</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #c86b6b, #00ff80);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+        }
 
-.navbar-custom {
-	background-color: rgba(0, 0, 0, 0.7);
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 1000;
-}
+        .navbar-custom {
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
-.navbar-custom a {
-	color: #ffffff !important;
-}
+        .navbar-custom a {
+            color: #ffffff !important;
+        }
 
-.navbar-custom .navbar-brand {
-	font-weight: bold;
-}
+        .navbar-custom .navbar-brand {
+            font-weight: bold;
+        }
 
-.container {
-	max-width: 1500px;
-	margin-top: 100px;
-	/* Reduced margin for the table to be closer to the top */
-	text-align: center;
-}
+        .container {
+            max-width: 1500px;
+            /* margin-top: 0px; */
+            /* Reduced margin for the table to be closer to the top */
+            text-align: center;
+            max-height: 1000px;
+        }
 
-.sticky-header {
-	position: sticky;
-	top: 0;
-	left:45%;
-	background-color: rgba(0, 0, 0, 0.7);
-	z-index: 1000;
-	text-align: center;
-	padding: 5px;
-	font-weight: bold;
-	width: max-content;
-	font-size: 24px;
-	color: #ffffff;
-	margin-bottom: 100px;
-}
+        .sort {
+            background-color: transparent;
+            color: white;
+            border: none;
+        }
 
-.table-custom {
-	background-color: rgba(0, 0, 0, 0.8);
-	/* Darker background for better contrast */
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-	overflow-x: auto;
-	/* Ensures table is responsive */
-}
+        .history {
+            height: 70vh;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 10px solid rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
 
-.table-striped tbody tr:nth-of-type(odd) {
-	background-color: rgba(255, 255, 255, 0.1);
-	/* Slightly lighter row color */
-}
+        .history::-webkit-scrollbar {
+            display: none;
 
-.table-striped td, .table-striped th {
-	color: #ffffff;
-	/* White text color for visibility */
-	font-weight: bold;
-	/* Bolder text for readability */
-	padding: 15px;
-	/* Increase padding for better spacing */
-	border-bottom: 1px solid #c86b6b;
-	/* Yellow border for rows */
-}
+        }
 
-.table-striped th {
-	background-color: #c86b6b;
-	/* Light golden background for headers */
-}
+        .history::-webkit-scrollbar-track {
+            display: none;
+        }
 
-.text-success {
-	color: #28a745 !important;
-}
+        .sticky-header {
+            position: sticky;
+            top: 0px;
+            left: 45%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            text-align: center;
+            padding: 5px;
+            font-weight: bold;
+            width: max-content;
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 100px;
+        }
 
-.text-danger {
-	color: #dc3545 !important;
-}
+        .table-custom {
+            background-color: rgba(0, 0, 0, 0.8);
+            /* Darker background for better contrast */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            overflow-x: auto;
+            /* Ensures table is responsive */
+        }
 
-.custom-link {
-	color: black;
-	text-decoration: none;
-	font-weight: bold;
-}
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Slightly lighter row color */
+        }
 
-.custom-link:hover {
-	color: white;
-	text-decoration: underline;
-}
-</style>
+        .table-striped td,
+        .table-striped th {
+            color: #ffffff;
+            /* White text color for visibility */
+            font-weight: bold;
+            /* Bolder text for readability */
+            padding: 15px;
+            /* Increase padding for better spacing */
+            border-bottom: 1px solid #c86b6b;
+            /* Yellow border for rows */
+        }
+
+        .table-striped th {
+            background-color: #c86b6b;
+            /* Light golden background for headers */
+        }
+
+        .text-success {
+            color: #28a745 !important;
+        }
+
+        .text-danger {
+            color: #dc3545 !important;
+        }
+
+        .custom-link {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .custom-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-custom">
-		<a class="navbar-brand" href="#">City Bank</a>
-		<ul class="navbar-nav ml-auto">
-			<li class="nav-item"><a class="nav-link" href="dash">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="transactions">Transactions</a></li>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="#">City Bank</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="dash">Dashboard</a></li>
+            <li class="nav-item"><button class="nav-link sort" popovertarget="sort-menu">Sort / Filter</button></li>
             <li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
-		</ul>
-	</nav>
+        </ul>
+    </nav>
+    <div id="sort-menu" popover class="bg-dark shadow-lg p-3 bg-body-tertiary rounded text-center">
+        <div class="d-flex p-5 border border-3 rounded rounded-2">
+            <div class="m-3 p-5 border border-danger border-end">
+                <h3 class="text-danger">Sort By: </h3>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="transactions">Time (default)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="transactions?by=transAmt">Amount</a></li>
+                </ul>
+            </div>
 
-	<div class="container">
-		<div class="sticky-header text-center mb-3 px-3">
-			<span>Transaction History</span>
-		</div>
-		<div class="table-responsive table-custom">
-			<table class="table table-dark table-striped">
-				<thead>
-					<tr>
-						<th>S.No.</th>
-						<th>Type</th>
-						<th>Amount</th>
-						<th>Date</th>
-						<th>Time</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:if="${transactions.isEmpty()}==true">
-						<td colspan="5">No Transactions Yet</td>
-					</tr>
-					<tr th:each="transaction, i : ${transactions}">
-						<td th:text="${i.index +1}"></td>
-						<td th:text="${transaction.transType}"></td>
-						<td th:text="${transaction.transAmt}"
-							th:classappend="${transaction.transType == 'Deposit' ? 'text-success' : 'text-danger'}">
-							<span
-							th:text="transaction.type == 'Deposit'} ? '+$'+'transaction.transAmt' : '-$' + transaction.transAmt"></span>
-						</td>
-						<td th:text="${transaction.time}"></td>
-						<td th:text="${transaction.date}"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<br>
-		<p class="text-center">
-			<a href="dash" class="custom-link">Back
-				to Dashboard</a>
-		</p>
-	</div>
+            <div class="m-3 p-5 border border-danger border-start">
+                <h3 class="text-danger">Filter By: </h3>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="view-deposits">View Deposits</a></li>
+                    <li class="nav-item"><a class="nav-link" href="view-withdrawals">View Withdrawal</a></li>
+                </ul>
+            </div>
+            
+            <!-- <button class="btn-close" data-bs-dismiss=popover aria-label="Close">&times;</button> -->
+        </div>
+        <button type="button" class="btn btn-outline-danger mt-2" popovertarget="sort-menu">Close</button>
+    </div>
+    <div class="container">
+        <div class="sticky-header text-center mb-3 px-3">
+            <span>Transaction History</span>
+        </div>
+        <div class="history">
+            <div class="table-responsive table-custom">
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${transactions.isEmpty()}==true">
+                            <td colspan="5">No Transactions Yet</td>
+                        </tr>
+                        <tr th:each="transaction, i : ${transactions}">
+                            <td th:text="${i.index +1}"></td>
+                            <td th:text="${transaction.transType}"></td>
+                            <td th:text="${transaction.transAmt}"
+                                th:classappend="${transaction.transType == 'Deposit' ? 'text-success' : 'text-danger'}">
+                                <span
+                                    th:text="transaction.type == 'Deposit'} ? '+$'+'transaction.transAmt' : '-$' + transaction.transAmt"></span>
+                            </td>
+                            <td th:text="${#temporals.format(transaction.timeStamp, 'dd MMM yyyy')}"></td>
+                            <td th:text="${#temporals.format(transaction.timeStamp, 'hh:mm:ss a')}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br>
+        <p th:if="${isGenerated==true}">
+            <a href="view-report" target="_blank" class="badge bg-dark text-white p-2 text-center m-2">View Report</a>
+            <a href="get-report" target="_blank" class="badge bg-primary text-white p-2 text-center m-2">Download
+                Report</a>
+        </p>
+        <p class="text-center">
+            <a href="report" class="badge bg-success text-white p-2 text-center m-2">Generate Report</a>
+            <a href="dash" class="badge bg-danger text-white p-2 text-center m-2">Back
+                to Dashboard</a> <br>
+        </p>
+    </div>
 
 </body>
 

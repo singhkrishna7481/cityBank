@@ -24,7 +24,12 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(req -> {
-			req.requestMatchers("/bank/register","/bank/details").permitAll().anyRequest().authenticated();
+			req.requestMatchers("/bank/register",
+													"/bank/forgot",
+													"/bank/send",
+													"/bank/verify",
+													"/bank/reset",
+													"/bank/details").permitAll().anyRequest().authenticated();
 		});
 
 		http.formLogin(form -> {
@@ -49,7 +54,6 @@ public class SecurityConfig {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setPasswordEncoder(passwordEncoder());
 		provider.setUserDetailsService(userDetailsService());
-
 		return provider;
 	}
 
