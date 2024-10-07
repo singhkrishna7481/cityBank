@@ -1,4 +1,4 @@
-# Bank Management Web Application
+# **<div align="center">Bank Management Web Application</div>**  
 #### Role: Independent Developer 
 ### Project Overview: 
 Designed and developed a comprehensive Bank Management System to streamline banking operations, enhance customer experience, and 
